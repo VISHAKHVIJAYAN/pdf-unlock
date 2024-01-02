@@ -41,6 +41,12 @@ goto done
 :run_gs
 rem echo Working...
 "%gs_path%" -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=%unlocked_pdf_path% -c .setpdfwrite -f %locked_pdf_path%
+
+rem Function to change file permissions (now placed after it's called)
+:change_permissions
+set /p new_permissions="Enter new permissions (e.g., rw-r--r--): "
+icacls %unlocked_pdf_path% /grant Users:%new_permissions%
+echo Permissions for %unlocked_pdf_path% changed to %new_permissions%
 goto done
 
 :done
